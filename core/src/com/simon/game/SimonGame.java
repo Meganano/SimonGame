@@ -1,6 +1,6 @@
 package com.simon.game;
 
-import java.util.concurrent.TimeUnit;
+import javax.swing.Timer;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
@@ -14,7 +14,7 @@ public class SimonGame extends Game{
 	public SpriteBatch batch;
 	public int flash;
 
-	public void update() {
+	public void iskeypressed() {
 		if (Gdx.input.isKeyJustPressed(Keys.A)) {
 			flash = 1;
 		}
@@ -28,13 +28,17 @@ public class SimonGame extends Game{
 			flash = 4;
 		}
 	}
+	public void update() {
+		iskeypressed();
+	}
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		setScreen(new GameScreen(this)); 
 	}
-
+	
+	
 	@Override
 	public void render() {
 		batch.begin();
@@ -44,6 +48,7 @@ public class SimonGame extends Game{
         	System.out.println("GREEN");
         	batch.draw(GameScreen.greenImg, 0,0);
         }
+         
         if(flash == 2) {
         	System.out.println("RED");
         	batch.draw(GameScreen.redImg, 0,0);
@@ -56,7 +61,12 @@ public class SimonGame extends Game{
         	System.out.println("BLUE");
         	batch.draw(GameScreen.blueImg, 0,0);
         }
-        
+       try {
+		Thread.sleep(130);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
        flash = 0;
        batch.end();
 	}
