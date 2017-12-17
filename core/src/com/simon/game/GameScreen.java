@@ -23,12 +23,14 @@ public class GameScreen extends ScreenAdapter{
     private static final Texture redImg = new Texture("red.jpg");
     private static final Texture yellowImg = new Texture("yellow.jpg");
     private static final Texture blueImg = new Texture("blue.jpg");
+    private static final Texture nextImg = new Texture("next.jpg");
     
     private int lengthQ; 
     private int count= 0;
+    private int stage = 0;
     public ArrayList  listQ = new ArrayList();
     
-    public BitmapFont font;
+    public BitmapFont font, next;
     public boolean gameover = false;
     public boolean waitinput = false;
     
@@ -36,7 +38,8 @@ public class GameScreen extends ScreenAdapter{
        this.simonGame = simonGame;
        checkPress = new CheckPress();
        randomColour = new RandomColour();
-       
+       font = new BitmapFont();
+       next = new BitmapFont();
     }
     
     
@@ -47,6 +50,10 @@ public class GameScreen extends ScreenAdapter{
     	if(!gameover) {
     		batch.draw(GameScreen.simonImg, 0,0);
     		createStage();
+    		font.draw(batch, "Stage: "+stage, 325, 350);
+    		font.draw(batch, "Pressed: "+ count, 325, 325);
+    		
+    		
     	}
     	else {
     		batch.draw(GameScreen.overImg, 0,0);
@@ -70,11 +77,10 @@ public class GameScreen extends ScreenAdapter{
 	    	if(count+1 == lengthQ) {
 	    		System.out.println("Check");
 	    		waitinput = false;
-
 	    	}
 	    	count++;
 	    }
-	    System.out.println("Ans: "+press + "i2: "+count);
+	    //System.out.println("Ans: "+press + "i2: "+count);
 	    	
 	    }	
     
@@ -87,7 +93,7 @@ public class GameScreen extends ScreenAdapter{
 	    		
 	    	num = randomColour.randomnum();
 	    	listQ.add(num);
-	    	System.out.println(listQ);
+	    	//System.out.println(listQ);
 	    		
 	    	lengthQ = listQ.size();
 	    	//System.out.println("length: "+lengthQ);
@@ -107,7 +113,8 @@ public class GameScreen extends ScreenAdapter{
 	     		 }
 	    		i++;
 	    	}
-	    	//waitinput = true;
+	    	stage++;
+	    	
     	}
     	if(!Gdx.input.isKeyJustPressed(Keys.A) | !Gdx.input.isKeyJustPressed(Keys.S) | !Gdx.input.isKeyJustPressed(Keys.Z) | Gdx.input.isKeyJustPressed(Keys.X)) {
     		waitinput = true;
