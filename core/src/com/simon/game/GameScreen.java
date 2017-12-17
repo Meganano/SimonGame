@@ -25,7 +25,7 @@ public class GameScreen extends ScreenAdapter{
     private static final Texture blueImg = new Texture("blue.jpg");
     
     private int lengthQ; 
-    public ArrayList listAns = new ArrayList();
+    private int count= 0;
     public ArrayList  listQ = new ArrayList();
     
     public BitmapFont font;
@@ -58,42 +58,30 @@ public class GameScreen extends ScreenAdapter{
     public void checkAns() {
     	SpriteBatch batch = simonGame.batch;
     	checkPress = new CheckPress();
-    	//int press = checkPress.iskeypressed();
-    	//drawsimon(press);
-    	
-    	listAns.clear();
-    	//System.out.println("lengthQ: "+lengthQ);
-    	
-    	for(int i1 = 0; i1 < lengthQ ; i1++) {
-    		int press = 0;
-    		press = checkPress.iskeypressed();
-        	drawsimon(press);
-    		if(press != 0) {
-    			listAns.add(press);
-    		}
-    	}
-    	
     	//System.out.println("Ans: "+listAns);
     	
-    	int lengthAns = listAns.size();
-    	
-    	if(lengthAns == lengthQ) {
-    		System.out.println("Ans: "+listAns);
-	    	for(int i2 = 0; i2 < lengthQ ; i2++) {
-	    		if((Integer) listQ.get(i2) != (Integer) listAns.get(i2)) {
-	    			gameover = true;
-	    		}
-	    		else {
-	    			System.out.println("Check");
-	    			waitinput = false;
-	    		}
-	    	}	
-    	}
-    }
+	    int press = checkPress.iskeypressed();
+	    drawsimon(press);
+	    if(press != (Integer) listQ.get(count) && press != 0) {
+	    	gameover = true;
+	    }
+	    else if (press == (Integer) listQ.get(count)) {
+	    	//System.out.println("Check");
+	    	if(count+1 == lengthQ) {
+	    		System.out.println("Check");
+	    		waitinput = false;
+
+	    	}
+	    	count++;
+	    }
+	    System.out.println("Ans: "+press + "i2: "+count);
+	    	
+	    }	
     
     
     public void createStage() {
     	if(waitinput == false) {
+    		count = 0;
 	    	int num;
 	    	SpriteBatch batch = simonGame.batch;
 	    		
